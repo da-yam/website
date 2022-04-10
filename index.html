@@ -1,17 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dayam</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title>Dayam</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-<!--
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <!--
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.png">
@@ -21,13 +20,101 @@
 
   <link rel="manifest" href="site.webmanifest">
 -->
-  <meta name="theme-color" content="#fafafa">
-</head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
 
-<body>
+        background-color: #9d8268;
+        background-image: url(media/ocean-large.jpg);
+        background-position: center center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
 
-  <h1>Dayam</h1>
+        color: white;
+        font-family: sans-serif;
+      }
 
-</body>
+      @media only screen and (max-width: 800px) {
+        body {
+          background-image: url(media/ocean-small.jpg);
+        }
+      }
 
+      .js audio,
+      .no-js #play-box {
+        display: none;
+      }
+
+      #arrange {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        text-align: right;
+        margin: 1em;
+      }
+
+      #play-button {
+        font-size: 1.2em;
+        border-radius: 50%;
+        border-width: 0.2em;
+        border-style: solid;
+        padding: 0.3em;
+        text-decoration: none;
+        opacity: 1;
+        transition: all 2s;
+      }
+
+      #play-button:link,
+      #play-button:visited {
+        border-color: gray;
+        color: gray;
+      }
+
+      #play-button.playing {
+        opacity: 0.25;
+      }
+    </style>
+
+    <meta name="theme-color" content="#9D8268" />
+  </head>
+
+  <body>
+    <div id="arrange">
+      <h1>dayam.org</h1>
+      <audio controls muted autoplay loop>
+        <source src="media/ocean.ogg" type="audio/ogg" />
+        <source src="media/ocean.mp3" type="audio/mpeg" />
+      </audio>
+      <div id="play-box">
+        <a href="#" id="play-button">🔊</a>
+      </div>
+    </div>
+
+    <script>
+      document.body.parentNode.classList.remove("no-js");
+      document.body.parentNode.classList.add("js");
+
+      const audio = document.querySelector("audio");
+      const playButton = document.querySelector("#play-button");
+
+      playButton.onclick = function (event) {
+        event.preventDefault();
+        if (playButton.classList.contains("playing")) {
+          playButton.classList.remove('playing');
+          audio.muted = true;
+          return;
+        }
+        playButton.classList.add("playing");
+        audio.volume = 0;
+        audio.muted = false;
+        function fadeIn() {
+          audio.volume += 0.05;
+          if (audio.volume < 0.9) setTimeout(fadeIn, 100);
+        }
+        fadeIn();
+      };
+    </script>
+  </body>
 </html>
