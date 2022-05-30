@@ -43,6 +43,10 @@ server {
     return 301 https://\$host\$request_uri;
   }
 
+  if ($host ~ ^www\.(?<domain>.+)$) {
+    return 301 https://$domain$request_uri;
+  }
+
   root /opt/dayam/website;
   index index.html;
 
